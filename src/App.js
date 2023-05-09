@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react'
+import './App.css'
+import Laskuri from './Laskuri'
+import Viesti from './Viesti'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+
+  // App komponentin tila
+const [showLaskuri, setShowLaskuri] = useState(false)
+
+const huomio = () => {
+  alert("Huomio!")
 }
 
-export default App;
+
+  return (
+    <div className="App">
+
+        <h1>Hello World from React!</h1>
+
+        {showLaskuri && <Laskuri huomio={huomio} />}
+
+        {/* {showLaskuri  === true ? <Laskuri huomio={huomio}/> : null}  <----- TÄMÄ ON SAMA ASIA KUIN RIVI 21 */}
+
+        {/*BOOLEAN VAIHDETAAN BUTTONIA PAINAMALLA KÄÄNTEISEKSI (TRUE/FALSE)  !showLaskuri parametrillä  */}
+        {showLaskuri && <button onClick={() => setShowLaskuri(!showLaskuri)}>Piilota laskuri</button>}
+
+        {!showLaskuri && <button onClick={() => setShowLaskuri(!showLaskuri)}>Näytä laskuri</button>}
+
+
+        <Viesti teksti="Tervehdys app komponentista :)" />
+
+    </div>
+  )
+}
+
+export default App
