@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import './App.css'
 import Laskuri from './Laskuri'
 import Viesti from './Viesti'
+import Posts from './Posts'
 
 const App = () => {
 
@@ -18,9 +19,9 @@ const huomio = () => {
 
         <h1>Hello World from React!</h1>
 
-        {showLaskuri && <Laskuri huomio={huomio} />}
+        <Posts />
 
-        {/* {showLaskuri  === true ? <Laskuri huomio={huomio}/> : null}  <----- TÄMÄ ON SAMA ASIA KUIN RIVI 21 */}
+        {showLaskuri && <Laskuri huomio={huomio} />}
 
         {/*BOOLEAN VAIHDETAAN BUTTONIA PAINAMALLA KÄÄNTEISEKSI (TRUE/FALSE)  !showLaskuri parametrillä  */}
         {showLaskuri && <button onClick={() => setShowLaskuri(!showLaskuri)}>Piilota laskuri</button>}
