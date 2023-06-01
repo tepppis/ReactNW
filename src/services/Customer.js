@@ -8,10 +8,19 @@ const getAll = () => {
     return request.then(response => response.data)
 }
 
+//HTTP-pyyntö POST
 const create = newCustomer => {
     return axios.post(baseUrl, newCustomer)
 }
 
+//HTTP-pyyntö DELETE
+const remove = id => {
+    return axios.delete(`${baseUrl}/${id}`)
+}
 
+//HTTP-pyyntö PUT
+const update = (object) => {
+    return axios.put(`${baseUrl}/${object.customerId}`, object)
+}
 
-export default { getAll, create }
+export default { getAll, create, remove, update }

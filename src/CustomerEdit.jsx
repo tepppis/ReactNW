@@ -3,31 +3,30 @@ import React, {useState} from 'react'
 import CustomerService from './services/Customer'
 
 
-const CustomerAdd = ({setLisäystila, setIsPositive, setShowMessage, setMessage}) => {
+const CustomerEdit = ({setMuokkaustila, setIsPositive, setShowMessage, setMessage, muokattavaCustomer}) => {
 
 
 // Komponentin tilan määritys
 
-const [newCustomerId, setNewCustomerId] = useState('')
-const [newCompanyName, setNewCompanyName] = useState('')
-const [newContactName, setNewContactName] = useState('')
-const [newContactTitle, setNewContactTitle] = useState('')
+const [newCustomerId, setNewCustomerId] = useState(muokattavaCustomer.customerId)
+const [newCompanyName, setNewCompanyName] = useState(muokattavaCustomer.companyName)
+const [newContactName, setNewContactName] = useState(muokattavaCustomer.contactName)
+const [newContactTitle, setNewContactTitle] = useState(muokattavaCustomer.contactTitle)
 
-const [newAddress, setNewAddress] = useState('')
-const [newCity, setNewCity] = useState('')
-const [newRegion, setNewRegion] = useState('')
-const [newPostalCode, setNewPostalCode] = useState('')
+const [newCountry, setNewCountry] = useState(muokattavaCustomer.country)
+const [newAddress, setNewAddress] = useState(muokattavaCustomer.address)
+const [newCity, setNewCity] = useState(muokattavaCustomer.city)
 
-const [newCountry, setNewCountry] = useState('')
-const [newPhone, setNewPhone] = useState('')
-const [newFax, setNewFax] = useState('')
+const [newPostalCode, setNewPostalCode] = useState(muokattavaCustomer.postalCode)
+const [newPhone, setNewPhone] = useState(muokattavaCustomer.phone)
+const [newFax, setNewFax] = useState(muokattavaCustomer.fax)
 
 
 // onSubmit tapahtumankäsittelijä funktio
 const handleSubmit = (event) => {
     event.preventDefault()
     var newCustomer = {
-        customerId: newCustomerId.toUpperCase(),
+        customerId: newCustomerId,
         companyName: newCompanyName,
         contactName: newContactName,
         contactTitle: newContactTitle,
@@ -39,10 +38,10 @@ const handleSubmit = (event) => {
         fax: newFax
     }
     
-    CustomerService.create(newCustomer)
+    CustomerService.update(newCustomer)
     .then(response => {
        if (response.status === 200) {
-        setMessage("Added new Customer: " + newCustomer.companyName)
+        setMessage("Updated Customer: " + newCustomer.companyName)
         setIsPositive(true)
         setShowMessage(true)
 
@@ -50,7 +49,7 @@ const handleSubmit = (event) => {
             setShowMessage(false)
         },5000)
         
-        setLisäystila(false)
+        setMuokkaustila(false)
        } 
 
     })
@@ -67,13 +66,12 @@ const handleSubmit = (event) => {
 
 
   return (
-    <div id="addNew">
-        <h2>Customer add</h2>
+    <div id="editForm">
+        <h2>Customer Edit</h2>
         
         <form onSubmit={handleSubmit}>
             <div>
-                <input type="text" value={newCustomerId} onChange={({target}) => setNewCustomerId(target.value)} required 
-                placeholder="ID with 5 capital letters" maxLength="5" minLength="5" />
+                <input type="text" value={newCustomerId} disabled />
             </div>
             <div>
                 <input type="text" value={newCompanyName} onChange={({target}) => setNewCompanyName(target.value)} required
@@ -96,10 +94,6 @@ const handleSubmit = (event) => {
                 placeholder="City"/>
             </div>
             <div>
-                <input type="text" value={newRegion} onChange={({target}) => setNewRegion(target.value)} required 
-                placeholder="Region"/>
-            </div>
-            <div>
                 <input type="text" value={newPostalCode} onChange={({target}) => setNewPostalCode(target.value)} 
                 placeholder="Postal Code"/>
             </div>
@@ -117,10 +111,10 @@ const handleSubmit = (event) => {
             </div>
 
             <input type='submit' value='save' />
-            <input type='button' value='back' onClick={() => setLisäystila(false)}/>
+            <input type='button' value='back' onClick={() => setMuokkaustila(false)}/>
         </form>
     </div>
   )
 }
 
-export default CustomerAdd
+export default CustomerEdit
